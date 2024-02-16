@@ -1,26 +1,23 @@
-package cache
+package repository
 
 import (
 	"errors"
 	"fmt"
-
-	"github.com/ito30/cdp/entity"
-	repo "github.com/ito30/cdp/repository"
 )
 
-type userRepoCache struct {
-	cache      map[int]*entity.User
-	userRepoDB repo.UserRepo
+type cachedUserRepo struct {
+	cache      map[int]*User
+	userRepoDB UserRepo
 }
 
-func NewUserRepo(userRepoDB repo.UserRepo) *userRepoCache {
-	return &userRepoCache{
-		cache:      entity.Users,
+func NewCachedUserRepo(userRepoDB UserRepo) *cachedUserRepo {
+	return &cachedUserRepo{
+		cache:      UserCache,
 		userRepoDB: userRepoDB,
 	}
 }
 
-func (r *userRepoCache) Get(id int) (*entity.User, error) {
+func (r *cachedUserRepo) Get(id int) (*User, error) {
 	cachedUser, ok := r.cache[id]
 	if ok {
 		fmt.Println("retrieving user from cache")
@@ -44,7 +41,7 @@ func (r *userRepoCache) Get(id int) (*entity.User, error) {
 	return user, nil
 }
 
-func (r *userRepoCache) Create(user entity.User) error {
+func (r *cachedUserRepo) Create(user User) error {
 	if user.ID == 0 {
 		return errors.New("bad request")
 	}

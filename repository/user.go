@@ -1,11 +1,11 @@
-package entity
+package repository
 
 type User struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
 
-var Users map[int]*User = map[int]*User{
+var UserCache map[int]*User = map[int]*User{
 	1: {
 		ID:   1,
 		Name: "John",
