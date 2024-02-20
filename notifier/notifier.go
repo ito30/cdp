@@ -7,8 +7,9 @@ type INotifier interface {
 }
 
 type (
-	NotifierType string
-	NotifierOpt  map[NotifierType]bool
+	NotifierType  string
+	NotifierOpt   map[NotifierType]bool
+	NotifierTypes map[NotifierType]func(INotifier) INotifier
 )
 
 var (
@@ -18,7 +19,7 @@ var (
 	NotifierTypeWa    NotifierType = "wa"
 
 	// Notifier instantiation
-	notifiers map[NotifierType]func(INotifier) INotifier = map[NotifierType]func(INotifier) INotifier{
+	notifiers NotifierTypes = NotifierTypes{
 		NotifierTypeSlack: func(n INotifier) INotifier {
 			return NewSlackNotifier(n)
 		},
