@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNotifier(t *testing.T) {
+func TestPizzaToppings(t *testing.T) {
 	tests := map[string]struct {
 		pizza func() Pizza
 	}{
@@ -19,28 +19,25 @@ func TestNotifier(t *testing.T) {
 		"veggie with cheese pizza": {
 			pizza: func() Pizza {
 				veggie := &VeggieMania{}
-				return &CheeseTopping{
-					pizza: veggie,
-				}
+				return &CheeseTopping{pizza: veggie}
 			},
 		},
 		"veggie with cheese & tomato pizza": {
 			pizza: func() Pizza {
 				veggie := &VeggieMania{}
-				veggieWithCheese := &CheeseTopping{
-					pizza: veggie,
-				}
-
-				return &TomatoTopping{
-					pizza: veggieWithCheese,
-				}
+				veggieWithCheese := &CheeseTopping{pizza: veggie}
+				return &TomatoTopping{pizza: veggieWithCheese}
+			},
+		},
+		"cheese topping only": {
+			pizza: func() Pizza {
+				return &CheeseTopping{}
 			},
 		},
 	}
 
 	for name, tt := range tests {
-		pizzaPrice := tt.pizza().getPrice()
-		fmt.Printf("Price of %s is %d\n", name, pizzaPrice)
+		fmt.Printf("Price of %s is %d\n", name, tt.pizza().getPrice())
 	}
 }
 
