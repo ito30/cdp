@@ -3,10 +3,10 @@ package notifier
 import "fmt"
 
 type slackNotifier struct {
-	notifier INotifier
+	notifier Notifier
 }
 
-func NewSlackNotifier(notifier INotifier) *slackNotifier {
+func NewSlackNotifier(notifier Notifier) *slackNotifier {
 	return &slackNotifier{
 		notifier: notifier,
 	}

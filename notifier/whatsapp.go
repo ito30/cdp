@@ -3,10 +3,10 @@ package notifier
 import "fmt"
 
 type whatsAppNotifier struct {
-	notifier INotifier
+	notifier Notifier
 }
 
-func NewWhatsAppNotifier(notifier INotifier) *whatsAppNotifier {
+func NewWhatsAppNotifier(notifier Notifier) *whatsAppNotifier {
 	return &whatsAppNotifier{
 		notifier: notifier,
 	}

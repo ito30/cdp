@@ -7,11 +7,9 @@ import (
 )
 
 func TestNotifier(t *testing.T) {
-	message := "Hi you got notification from John Doe!"
-
 	tests := map[string]struct {
 		userCfg  string
-		notifier func(userCfg string) INotifier
+		notifier func(userCfg string) Notifier
 	}{
 		"slack": {
 			userCfg: `
@@ -19,7 +17,7 @@ func TestNotifier(t *testing.T) {
 					"slack": true
 				}
 			`,
-			notifier: func(userCfg string) INotifier {
+			notifier: func(userCfg string) Notifier {
 				opt := ParseToObj[NotifierOpt](userCfg)
 				return NewN(opt)
 			},
@@ -31,7 +29,7 @@ func TestNotifier(t *testing.T) {
 					"sms": true
 				}
 			`,
-			notifier: func(userCfg string) INotifier {
+			notifier: func(userCfg string) Notifier {
 				opt := ParseToObj[NotifierOpt](userCfg)
 				return NewN(opt)
 			},
@@ -44,7 +42,7 @@ func TestNotifier(t *testing.T) {
 					"wa": true
 				}
 			`,
-			notifier: func(userCfg string) INotifier {
+			notifier: func(userCfg string) Notifier {
 				opt := ParseToObj[NotifierOpt](userCfg)
 				return NewN(opt)
 			},
@@ -52,7 +50,7 @@ func TestNotifier(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt.notifier(tt.userCfg).Send(message)
+		tt.notifier(tt.userCfg).Send("Kamu dapat 3000 Gopay coins!")
 		fmt.Println()
 	}
 }

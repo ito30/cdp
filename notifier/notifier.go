@@ -2,14 +2,14 @@ package notifier
 
 import "fmt"
 
-type INotifier interface {
+type Notifier interface {
 	Send(message string) error
 }
 
 type (
 	NotifierType  string
 	NotifierOpt   map[NotifierType]bool
-	NotifierTypes map[NotifierType]func(INotifier) INotifier
+	NotifierTypes map[NotifierType]func(Notifier) Notifier
 )
 
 var (
@@ -20,20 +20,20 @@ var (
 
 	// Notifier instantiation
 	notifiers NotifierTypes = NotifierTypes{
-		NotifierTypeSlack: func(n INotifier) INotifier {
+		NotifierTypeSlack: func(n Notifier) Notifier {
 			return NewSlackNotifier(n)
 		},
-		NotifierTypeSms: func(n INotifier) INotifier {
+		NotifierTypeSms: func(n Notifier) Notifier {
 			return NewSmsNotifier(n)
 		},
-		NotifierTypeWa: func(n INotifier) INotifier {
+		NotifierTypeWa: func(n Notifier) Notifier {
 			return NewWhatsAppNotifier(n)
 		},
 	}
 )
 
-func NewN(opt NotifierOpt) INotifier {
-	var n INotifier = &notifier{}
+func NewN(opt NotifierOpt) Notifier {
+	var n Notifier = &notifier{}
 
 	for nType, active := range opt {
 		if newN, ok := notifiers[nType]; ok && active {

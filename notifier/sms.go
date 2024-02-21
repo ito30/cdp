@@ -3,10 +3,10 @@ package notifier
 import "fmt"
 
 type smsNotifier struct {
-	notifier INotifier
+	notifier Notifier
 }
 
-func NewSmsNotifier(notifier INotifier) *smsNotifier {
+func NewSmsNotifier(notifier Notifier) *smsNotifier {
 	return &smsNotifier{
 		notifier: notifier,
 	}
